@@ -16,6 +16,31 @@ CargarAnimEscudos();
 CargarCabezas();
 CargarCascos();
 CargarCuerpos();
+CargarFxs();
+
+void CargarFxs()
+{
+    var filename = PathList.GetPath(PathType.Fxs);
+    using var ms = new MemoryStream(File.ReadAllBytes(filename));
+    using var reader = new BinaryReader(ms);
+    
+    ms.Position += 4 + 4 + 255;
+    var count = reader.ReadInt16();
+    var data = new GrhFx[count + 1];
+
+    for (int i = 1; i <= count; i++)
+    {
+        data[i] = new GrhFx
+        {
+            GrhId = reader.ReadInt16(),
+            OffsetX = reader.ReadInt16(),
+            OffsetY = reader.ReadInt16()
+        };
+    }
+    
+    File.WriteAllText(Path.Combine(Environment.CurrentDirectory, "out", "fxs.json"),
+        JsonSerializer.Serialize(data, jsonOptions));
+}
 
 void CargarCuerpos()
 {
