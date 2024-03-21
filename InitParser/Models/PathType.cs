@@ -10,6 +10,7 @@ public enum PathType{
     Shield,
     Graphics,
     Fxs,
+    LocaleObject
 }
  
 public static class PathList
@@ -25,6 +26,7 @@ public static class PathList
             PathType.Helmet => "Cascos.ind",
             PathType.Weapon => "Armas.dat",
             PathType.Shield => "Escudos.dat",
+            PathType.LocaleObject => "locale_obj_es.ind",
             _ => throw new ArgumentException(nameof(type))
         };
 
